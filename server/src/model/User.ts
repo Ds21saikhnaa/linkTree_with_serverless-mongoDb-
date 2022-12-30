@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { IUser } from "../interface";
+import jwt from 'jsonwebtoken';
+// import { sign } from "jsonwebtoken";
+import { IUser } from "../../interface";
 const UserSchema = new Schema<IUser>(
   {
     name: {
@@ -22,19 +23,21 @@ const UserSchema = new Schema<IUser>(
       select: false
     },
     profile: {
-      type: String
+      type: String,
+      default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
     }
   }, { timestamps: true }
 );
 
-UserSchema.pre("save", async function(next) {
-  if(!this.isModified("password")) next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+// UserSchema.pre("save", async function(next) {
+//   if(!this.isModified("password")) next();
+//   const salt = await bcrypt.genSalt(10);
+//   console.log(salt);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
 
-UserSchema.methods.getJsonWebToken = function(){
-  const token = jwt.sign({id: this._id, role: this.role}, process.env.JWT_SECRET, {
+UserSchema.methods.getJsonWebToken = function(): string{
+  const token = jwt.sign({id: this._id, role: this.name}, "process.env.JWT_SECRET", {
       expiresIn: process.env.JWT_EXPIRESIN
   });
   return token;

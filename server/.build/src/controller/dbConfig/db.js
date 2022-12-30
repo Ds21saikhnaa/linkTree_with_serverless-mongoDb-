@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDb = void 0;
 var mongoose_1 = require("mongoose");
-var handler_1 = require("../src/handler");
+var handler_1 = require("../../handler");
 var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
     var conn;
     return __generator(this, function (_a) {

@@ -1,5 +1,5 @@
 import { Schema, model} from 'mongoose';
-import { Link } from "../interface";
+import { Link } from "../../interface";
 const LinkSchema = new Schema<Link>(
   {
     name: {

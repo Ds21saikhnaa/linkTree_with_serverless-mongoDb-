@@ -43,10 +43,14 @@ var hello = function (event, context) { return __awaiter(void 0, void 0, void 0,
     return __generator(this, function (_a) {
         context.callbackWaitsForEmptyEventLoop = false;
         (0, db_1.connectDb)();
+        // const route = event.pathParameters!.routeName!;
+        // const met = event.requestContext.http;
+        // console.log(route);
         return [2 /*return*/, {
                 statusCode: 200,
                 body: JSON.stringify({
-                    message: "Hey AWS! I'm back"
+                    message: "Hey AWS! I'm back",
+                    data: event
                 }, null, 2),
             }];
     });

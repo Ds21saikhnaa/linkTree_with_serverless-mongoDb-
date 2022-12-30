@@ -36,20 +36,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDb = void 0;
+exports.User = void 0;
 var mongoose_1 = require("mongoose");
-var handler_1 = require("../src/handler");
-var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var conn;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect(handler_1.uri)];
-            case 1:
-                conn = _a.sent();
-                console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E : ".concat(conn.connection.host));
-                return [2 /*return*/];
-        }
+var bcrypt_1 = require("bcrypt");
+var jsonwebtoken_1 = require("jsonwebtoken");
+var UserSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        unique: true,
+        required: [true, "hereglegchiin ner oruulna uu!"]
+    },
+    email: {
+        type: String,
+        required: [true, "hereglegchiin email zaawal oruulna uu!"],
+        unique: true,
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "email hayg buruu bn!"]
+    },
+    password: {
+        type: String,
+        minlength: 6,
+        required: [true, "nuuts ugee oruulna uu!"],
+        select: false
+    },
+    profile: {
+        type: String,
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
+    }
+}, { timestamps: true });
+// UserSchema.pre("save", async function(next) {
+//   if(!this.isModified("password")) next();
+//   const salt = await bcrypt.genSalt(10);
+//   console.log(salt);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
+UserSchema.methods.getJsonWebToken = function () {
+    var token = jsonwebtoken_1.default.sign({ id: this._id, role: this.name }, "process.env.JWT_SECRET", {
+        expiresIn: process.env.JWT_EXPIRESIN
     });
-}); };
-exports.connectDb = connectDb;
-//# sourceMappingURL=db.js.map
+    return token;
+};
+UserSchema.methods.checkPassword = function (enteredPassword) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, bcrypt_1.default.compare(enteredPassword, this.password)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+};
+exports.User = (0, mongoose_1.model)('User', UserSchema);
+//# sourceMappingURL=User.js.map

@@ -13,6 +13,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
+  timeout: 20000
   environment:
     AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
     AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
@@ -22,8 +23,14 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/functions/handler.hello
     events:
       - httpApi:
           path: /
           method: get
+  test:
+    handler: src/functions/ama.test
+    events:
+      - httpApi:
+          path: /register
+          method: post

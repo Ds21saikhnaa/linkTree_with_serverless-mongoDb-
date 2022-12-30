@@ -38,15 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDb = void 0;
 var mongoose_1 = require("mongoose");
-var handler_1 = require("../src/handler");
 var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var conn;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect(handler_1.uri)];
+            case 0: return [4 /*yield*/, mongoose_1.default.connect("mongodb+srv://dashmandalsaikhanbileg:amazon@testamazon.4lbhbua.mongodb.net/?retryWrites=true&w=majority", function () {
+                    console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E");
+                })];
             case 1:
-                conn = _a.sent();
-                console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E : ".concat(conn.connection.host));
+                _a.sent();
                 return [2 /*return*/];
         }
     });
