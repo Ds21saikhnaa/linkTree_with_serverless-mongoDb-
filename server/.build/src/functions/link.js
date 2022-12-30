@@ -36,24 +36,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hello = exports.uri = void 0;
-var db_1 = require("./dbConfig/db");
-exports.uri = process.env.MONGODB_URI;
+exports.getLink = exports.createLink = exports.hello = void 0;
+var db_1 = require("../dbConfig/db");
+var linkController_1 = require("../controller/linkController");
+var default_1 = require("../utils/default");
 var hello = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         context.callbackWaitsForEmptyEventLoop = false;
-        (0, db_1.connectDb)();
-        // const route = event.pathParameters!.routeName!;
-        // const met = event.requestContext.http;
-        // console.log(route);
-        return [2 /*return*/, {
-                statusCode: 200,
-                body: JSON.stringify({
-                    message: "Hey AWS! I'm back",
-                    data: event
-                }, null, 2),
-            }];
+        return [2 /*return*/, (0, default_1.def)()];
     });
 }); };
 exports.hello = hello;
-//# sourceMappingURL=handler.js.map
+var createLink = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                context.callbackWaitsForEmptyEventLoop = false;
+                return [4 /*yield*/, (0, db_1.connectDb)(process.env.MONGODB_URI)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, (0, linkController_1.newLink)(event)];
+        }
+    });
+}); };
+exports.createLink = createLink;
+var getLink = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                context.callbackWaitsForEmptyEventLoop = false;
+                return [4 /*yield*/, (0, db_1.connectDb)(process.env.MONGODB_URI)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, (0, linkController_1.getUserLink)(event)];
+        }
+    });
+}); };
+exports.getLink = getLink;
+//# sourceMappingURL=link.js.map

@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
-import { uri } from "../functions/handler";
-export const connectDb = async() => {
-  await mongoose.connect("mongodb+srv://dashmandalsaikhanbileg:amazon@testamazon.4lbhbua.mongodb.net/?retryWrites=true&w=majority", () => {
+require('dotenv').config({ path: './a.env' });
+export const connectDb = async (url) => {
+  try {
+    const conn = mongoose.connect(url, {
+      serverSelectionTimeoutMS: 20000
+    });
     console.log(`MongoDB холбогдлоо`);
-  });
+  } catch (e) {
+    console.log(e);
+    
+  }
 }

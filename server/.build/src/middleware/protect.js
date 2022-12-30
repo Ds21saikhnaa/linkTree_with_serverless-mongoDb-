@@ -36,20 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDb = void 0;
-var mongoose_1 = require("mongoose");
-var handler_1 = require("../../handler");
-var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var conn;
+exports.authorize = exports.protect = void 0;
+// import jwt from "jsonwebtoken";
+var jwt = require("jsonwebtoken");
+var myError_js_1 = require("../utils/myError.js");
+var protect = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var token, tokenObj;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect(handler_1.uri)];
-            case 1:
-                conn = _a.sent();
-                console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E : ".concat(conn.connection.host));
-                return [2 /*return*/];
+        if (!event.headers.authorization) {
+            throw new myError_js_1.MyError("ene uildeliig hiihed tanii erh hurehgui bn. Ta ehleed newtrej oroh ystoi!", 401);
         }
+        token = event.headers.authorization.split(" ")[1];
+        if (!token) {
+            throw new myError_js_1.MyError("Ta ehleed newtrej oroh ystoi!", 400);
+        }
+        tokenObj = jwt.verify(token, process.env.JWT_SECRET);
+        // req.user = User.findById(tokenObj.id);
+        event.userId = tokenObj.id;
+        return [2 /*return*/];
     });
 }); };
-exports.connectDb = connectDb;
-//# sourceMappingURL=db.js.map
+exports.protect = protect;
+var authorize = function (createUser, nowUser) {
+    if (createUser != nowUser) {
+        return false;
+    }
+    else {
+        return true;
+    }
+};
+exports.authorize = authorize;
+//# sourceMappingURL=protect.js.map

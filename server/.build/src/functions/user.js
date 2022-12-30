@@ -36,20 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDb = void 0;
-var mongoose_1 = require("mongoose");
-var handler_1 = require("../src/handler");
-var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var conn;
+exports.userLogin = exports.userReq = exports.uri = void 0;
+var db_1 = require("../dbConfig/db");
+var UserController_1 = require("../controller/UserController");
+exports.uri = process.env.MONGODB_URI;
+var userReq = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect(handler_1.uri)];
+            case 0:
+                context.callbackWaitsForEmptyEventLoop = false;
+                return [4 /*yield*/, (0, db_1.connectDb)(process.env.MONGODB_URI)];
             case 1:
-                conn = _a.sent();
-                console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E : ".concat(conn.connection.host));
-                return [2 /*return*/];
+                _a.sent();
+                return [2 /*return*/, (0, UserController_1.register)(event)];
         }
     });
 }); };
-exports.connectDb = connectDb;
-//# sourceMappingURL=db.js.map
+exports.userReq = userReq;
+var userLogin = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                context.callbackWaitsForEmptyEventLoop = false;
+                return [4 /*yield*/, (0, db_1.connectDb)(process.env.MONGODB_URI)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, (0, UserController_1.login)(event)];
+        }
+    });
+}); };
+exports.userLogin = userLogin;
+//# sourceMappingURL=user.js.map

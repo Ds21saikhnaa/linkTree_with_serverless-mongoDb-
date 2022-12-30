@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,23 +47,57 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hello = exports.uri = void 0;
-var db_1 = require("./dbConfig/db");
-exports.uri = process.env.MONGODB_URI;
-var hello = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+exports.getUserLink = exports.newLink = void 0;
+var Link_js_1 = require("../model/Link.js");
+var User_js_1 = require("../model/User.js");
+var newLink = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var body, link, data;
     return __generator(this, function (_a) {
-        context.callbackWaitsForEmptyEventLoop = false;
-        (0, db_1.connectDb)();
-        // const route = event.pathParameters!.routeName!;
-        // const met = event.requestContext.http;
-        // console.log(route);
-        return [2 /*return*/, {
-                statusCode: 200,
-                body: JSON.stringify({
-                    message: "Hey AWS! I'm back"
-                }, null, 2),
-            }];
+        switch (_a.label) {
+            case 0:
+                body = JSON.parse(event.body);
+                link = new Link_js_1.Links(__assign({}, body));
+                return [4 /*yield*/, link.save()];
+            case 1:
+                data = _a.sent();
+                return [2 /*return*/, {
+                        statusCode: 200,
+                        body: JSON.stringify({
+                            success: true,
+                            data: data
+                        }, null, 2),
+                    }];
+        }
     });
 }); };
-exports.hello = hello;
-//# sourceMappingURL=handler.js.map
+exports.newLink = newLink;
+var getUserLink = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var name, links, id, user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                name = event.pathParameters.name;
+                console.log(name);
+                return [4 /*yield*/, Link_js_1.Links.find({ userName: name })];
+            case 1:
+                links = _a.sent();
+                id = links[0].userId;
+                return [4 /*yield*/, User_js_1.User.findById(id)];
+            case 2:
+                user = _a.sent();
+                // if (!links.length) {
+                //   throw new MyError("iim user medeelel bhgui!", 404);
+                // }
+                return [2 /*return*/, {
+                        statusCode: 200,
+                        body: JSON.stringify({
+                            success: true,
+                            data: links,
+                            user: user
+                        }, null, 2),
+                    }];
+        }
+    });
+}); };
+exports.getUserLink = getUserLink;
+//# sourceMappingURL=linkController.js.map

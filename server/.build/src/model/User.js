@@ -38,8 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 var mongoose_1 = require("mongoose");
-var bcrypt_1 = require("bcrypt");
-var jsonwebtoken_1 = require("jsonwebtoken");
+// import bcrypt from "bcrypt";
+var bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
 var UserSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -63,14 +64,29 @@ var UserSchema = new mongoose_1.Schema({
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&usqp=CAU"
     }
 }, { timestamps: true });
-// UserSchema.pre("save", async function(next) {
-//   if(!this.isModified("password")) next();
-//   const salt = await bcrypt.genSalt(10);
-//   console.log(salt);
-//   this.password = await bcrypt.hash(this.password, salt);
-// });
+UserSchema.pre("save", function (next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var salt, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    if (!this.isModified("password"))
+                        next();
+                    return [4 /*yield*/, bcrypt.genSalt(10)];
+                case 1:
+                    salt = _b.sent();
+                    console.log(salt);
+                    _a = this;
+                    return [4 /*yield*/, bcrypt.hash(this.password, salt)];
+                case 2:
+                    _a.password = _b.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
 UserSchema.methods.getJsonWebToken = function () {
-    var token = jsonwebtoken_1.default.sign({ id: this._id, role: this.name }, "process.env.JWT_SECRET", {
+    var token = jwt.sign({ id: this._id, role: this.name }, "process.env.JWT_SECRET", {
         expiresIn: process.env.JWT_EXPIRESIN
     });
     return token;
@@ -79,7 +95,7 @@ UserSchema.methods.checkPassword = function (enteredPassword) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, bcrypt_1.default.compare(enteredPassword, this.password)];
+                case 0: return [4 /*yield*/, bcrypt.compare(enteredPassword, this.password)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });

@@ -1,9 +1,4 @@
 {
-  // "compilerOptions": {
-  //   "removeComments": true,
-  //   "allowSyntheticDefaultImports": true,
-  //   "target": "ESNext"
-  // }
   "compilerOptions": {
     "preserveConstEnums": true,
     "strictNullChecks": true,

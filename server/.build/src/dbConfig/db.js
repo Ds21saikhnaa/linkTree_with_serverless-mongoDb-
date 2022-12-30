@@ -38,16 +38,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDb = void 0;
 var mongoose_1 = require("mongoose");
-var connectDb = function () { return __awaiter(void 0, void 0, void 0, function () {
+require('dotenv').config({ path: './a.env' });
+var connectDb = function (url) { return __awaiter(void 0, void 0, void 0, function () {
+    var conn;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.connect("mongodb+srv://dashmandalsaikhanbileg:amazon@testamazon.4lbhbua.mongodb.net/?retryWrites=true&w=majority", function () {
-                    console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E");
-                })];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
+        try {
+            conn = mongoose_1.default.connect(url, {
+                serverSelectionTimeoutMS: 20000
+            });
+            console.log("MongoDB \u0445\u043E\u043B\u0431\u043E\u0433\u0434\u043B\u043E\u043E");
         }
+        catch (e) {
+            console.log(e);
+        }
+        return [2 /*return*/];
     });
 }); };
 exports.connectDb = connectDb;

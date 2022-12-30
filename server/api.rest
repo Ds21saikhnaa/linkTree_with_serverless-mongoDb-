@@ -1,0 +1,20 @@
+GET http://localhost:3000
+
+####
+POST http://localhost:3000/register HTTP/1.1 Content-Type: application/json
+
+{
+  "name": "test", 
+  "email": "test@gmail.com",
+  "password": "123456"
+}
+
+### send put PUT http://localhost:3000/contents/3 HTTP/1.1 Content-Type: application/json
+
+# {
+#   "name": "duu",
+#   "url": "https://www.youtube.com/watch?v=u_fj8YrjEWE",
+#   "userId": "63af1df463efdc93eb5b9143",
+#   "userName": "test1"
+# }
+

@@ -36,29 +36,78 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.register = void 0;
+exports.login = exports.register = void 0;
+var myError_js_1 = require("../utils/myError.js");
 var User_js_1 = require("../model/User.js");
 var register = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, user, token;
+    var body, newUser, user, token, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log(event.body);
                 body = JSON.parse(event.body);
-                return [4 /*yield*/, User_js_1.User.create(body)];
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                newUser = new User_js_1.User(body);
+                return [4 /*yield*/, newUser.save()];
+            case 2:
                 user = _a.sent();
                 token = user.getJsonWebToken();
                 return [2 /*return*/, {
                         statusCode: 200,
                         body: JSON.stringify({
                             success: true,
-                            user: user,
-                            // token
+                            data: user,
+                            token: token
                         }, null, 2),
                     }];
+            case 3:
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [2 /*return*/, {
+                        statusCode: 200,
+                        body: JSON.stringify({
+                            success: false,
+                            data: err_1,
+                        }, null, 2),
+                    }];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
 exports.register = register;
+//user login 
+var login = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, email, password, user, pass;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = JSON.parse(event.body), email = _a.email, password = _a.password;
+                if (!email || !password) {
+                    throw new myError_js_1.MyError("ta email eswel nuuts ugee oruulna uu", 401);
+                }
+                return [4 /*yield*/, User_js_1.User.findOne({ email: email }).select("+password")];
+            case 1:
+                user = _b.sent();
+                if (!user) {
+                    throw new myError_js_1.MyError("email bolon nuuts ugee zow oruulna uu!", 401);
+                }
+                return [4 /*yield*/, user.checkPassword(password)];
+            case 2:
+                pass = _b.sent();
+                if (!pass) {
+                    throw new myError_js_1.MyError("email bolon nuuts ugee zow oruulna uu!", 401);
+                }
+                return [2 /*return*/, {
+                        statusCode: 200,
+                        body: JSON.stringify({
+                            success: true,
+                            token: user.getJsonWebToken(),
+                            data: user,
+                        })
+                    }];
+        }
+    });
+}); };
+exports.login = login;
 //# sourceMappingURL=UserController.js.map

@@ -23,14 +23,33 @@ provider:
 
 functions:
   hello:
-    handler: src/functions/handler.hello
+    handler: src/functions/link.hello
     events:
       - httpApi:
           path: /
           method: get
-  test:
-    handler: src/functions/ama.test
+  createLink: 
+    handler: src/functions/link.createLink
+    events:
+      - httpApi:
+          path: /create
+          method: post
+  getLink: 
+    handler: src/functions/link.getLink
+    events:
+      - httpApi:
+          path: /{name+}
+          method: get
+  userReq:
+    handler: src/functions/user.userReq
     events:
       - httpApi:
           path: /register
           method: post
+  userLogin: 
+    handler: src/functions/user.userLogin
+    events:
+      - httpApi:
+          path: /login
+          method: post
+

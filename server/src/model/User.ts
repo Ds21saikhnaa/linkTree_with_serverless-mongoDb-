@@ -1,6 +1,8 @@
-import { Schema, model } from 'mongoose';
-import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import {Schema, model } from 'mongoose';
+// import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+// import jwt from 'jsonwebtoken';
 // import { sign } from "jsonwebtoken";
 import { IUser } from "../../interface";
 const UserSchema = new Schema<IUser>(
@@ -29,12 +31,12 @@ const UserSchema = new Schema<IUser>(
   }, { timestamps: true }
 );
 
-// UserSchema.pre("save", async function(next) {
-//   if(!this.isModified("password")) next();
-//   const salt = await bcrypt.genSalt(10);
-//   console.log(salt);
-//   this.password = await bcrypt.hash(this.password, salt);
-// });
+UserSchema.pre("save", async function(next) {
+  if(!this.isModified("password")) next();
+  const salt = await bcrypt.genSalt(10);
+  console.log(salt);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 UserSchema.methods.getJsonWebToken = function(): string{
   const token = jwt.sign({id: this._id, role: this.name}, "process.env.JWT_SECRET", {
