@@ -43,5 +43,22 @@ export const getUserLink = async (event) => {
       2
     ),
   };
-  
+}
+
+export const deleteLink = async ( event ) => {
+  const link = Links.findById(event.pathParameters.id);
+  if (!link) {
+    throw new MyError("ийм линк байхгүй байна!", 404);
+  }
+  link.deleteMany();
+  return {
+    statusCode: 200,
+    body: JSON.stringify(
+      {
+        success: true
+      },
+      null,
+      2
+    ),
+  };
 }

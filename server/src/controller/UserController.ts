@@ -39,15 +39,15 @@ export const register = async ( event ): Promise<any> => {
 export const login = async (event) => {
   const {email, password} = JSON.parse(event.body);
   if (!email || !password) {
-    throw new MyError("ta email eswel nuuts ugee oruulna uu", 401);
+    throw new MyError("та эмайл эсвэл нууц үгээ оруулна уу!", 401);
   }
   const user = await User.findOne({email}).select("+password");
   if(!user){
-    throw new MyError("email bolon nuuts ugee zow oruulna uu!", 401);
+    throw new MyError("эмайл болон нууц үгээ зөв оруулна уу!", 401);
   }
   const pass = await user.checkPassword(password);
   if(!pass){
-    throw new MyError("email bolon nuuts ugee zow oruulna uu!", 401);
+    throw new MyError("эмайл болон нууц үгээ зөв оруулна уу!", 401);
   }
   return{
     statusCode: 200,
