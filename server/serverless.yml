@@ -4,7 +4,10 @@ service: linkTree
 frameworkVersion: '3'
 useDotenv: true
 
-	
+custom:
+  serverless-offline:
+    httpPort: 5000
+
 plugins:
   - serverless-offline
   - serverless-plugin-typescript
@@ -13,7 +16,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
-  timeout: 20000
+  # timeout: 30
   environment:
     AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
     AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
@@ -38,7 +41,7 @@ functions:
     handler: src/functions/link.getLink
     events:
       - httpApi:
-          path: /{name+}
+          path: /link/{name+}
           method: get
   userReq:
     handler: src/functions/user.userReq
