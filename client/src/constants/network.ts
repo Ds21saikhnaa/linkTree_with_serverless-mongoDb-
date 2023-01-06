@@ -1,0 +1,1 @@
+export const network = "https://linktree-production.up.railway.app/";

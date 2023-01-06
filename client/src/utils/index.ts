@@ -1,2 +1,6 @@
 export { Navbar } from "./Navbar"
 export { Log } from "./Log"
+export { styles } from "./Styles"
+export { MyInput } from "./MyInput"
+export { Btn } from "./Btn"
+export { ProImg } from "./ProImg"
