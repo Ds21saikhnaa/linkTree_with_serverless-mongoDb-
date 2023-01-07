@@ -1,10 +1,11 @@
-import { AddLink, Link, PubLink } from "../components"
+// import { AddLink, Link, PubLink } from "../components"
+import { AddLink, Link } from "../components"
 import { ProImg } from "../utils"
 
-const a = {
-  link: "https://tailwindcss.com/docs/min-height",
-  name: "hello"
-}
+// const a = {
+//   title: "youtube",
+//   link: "https://www.youtube.com/",
+// }
 export const Admin = () => {
   return (
     <div className="flex w-screen h-screen bg-gray-200">
@@ -26,10 +27,10 @@ export const Admin = () => {
             <ProImg url={"https://d1fdloi71mui9q.cloudfront.net/qr15XuYROmqho4619jF4_convert.jpg"} cls={"h-[70px] w-[70px] mt-4 rounded-full"} alt={"pro"} />
             <h3 className="mt-2 font-bold">hello</h3>
             <div className="overflow-y-auto h-[80%] w-[100%]">
-              <PubLink cls={"flex text-[12px]	mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} />
+              {/* <PubLink cls={"flex text-[12px]	mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} />
               <PubLink cls={"flex text-[12px] mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} />
               <PubLink cls={"flex text-[12px] mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} />
-              <PubLink cls={"flex text-[12px] mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} />
+              <PubLink cls={"flex text-[12px] mt-2 h-[30px] justify-center items-center rounded-lg mx-auto w-[90%] bg-white"} data={a} /> */}
               </div>
           </div>
           </div>

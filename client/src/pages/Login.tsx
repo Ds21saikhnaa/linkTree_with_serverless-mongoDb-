@@ -1,15 +1,35 @@
-import React from "react"
-import { Btn, MyInput } from "../utils"
+import React, { useState } from "react"
+import { Btn } from "../utils"
+import { Req } from "../interfaces";
+import { sendRequest } from "../utils/Api";
 export const Login = () => {
+  let flag: boolean = false;
+  const [loginInput, setLoginInput] = useState<Req>({
+    email: "",
+    password: ""
+  });
+  const { email, password } = loginInput;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  if (!email || !password) flag = true;
+  const login = async() => {
+    try {
+      const {data} = await sendRequest(`login/`, "POST", loginInput);
+      localStorage.setItem('qwert', JSON.stringify(data));
+    } catch (e: any) {
+      alert(e.message.toString())
+    }
+  }
   return (
     <div className="flex flex-row w-screen h-screen">
       <div className="h-screen w-2/3 max-[1100px]:h-fit max-[1000px]:w-screen flex justify-center">
         <div className="flex flex-col w-7/12 max-[1000px]:w-9/12 mt-40 text-center">
           <h1 className="text-5xl max-[1000px]:text-4xl	font-extrabold">Log in to your Linktree</h1>
-          <MyInput plach={"Username"} cls={"mt-20 max-[1000px]:mt-10 px-5 bg-zinc-300 h-12 rounded-md"} ty={"text"} />
-          <MyInput plach={"Password"} cls={"rounded-md px-5 mt-4 bg-zinc-300 h-12"} ty={"password"} />
-          <Btn txt={"Log In"} flag={false} cls={"mt-10 rounded-full bg-zinc-300	 h-12"} />
-          <p className="mt-10">Don't have a Linktree account? <a href="/register">Create one</a></p>
+          <input className="mt-20 max-[1000px]:mt-10 px-5 bg-zinc-300 h-12 rounded-md" placeholder="Email" type="text" value={email}
+          onChange={(e) => {setLoginInput({ ...loginInput, email: e.target.value})}}></input>
+          <input value={password} className="rounded-md px-5 mt-4 bg-zinc-300 h-12" placeholder="Password" type="password"
+          onChange={(e) => {setLoginInput({ ...loginInput, password: e.target.value})}}></input>
+          <Btn func={login} txt={"Log In"} flag={flag} cls={"disabled:bg-[gray] mt-10 rounded-full bg-zinc-300	 h-12"} />
+          <p className="mt-10">Don't have a Linktree account? <a className="underline" href="/register">Create one</a></p>
         </div>
       </div>
 

@@ -1,12 +1,7 @@
 import React, { useState } from "react"
 import { Btn } from "../utils"
 import { sendRequest } from "../utils/Api";
-type Req = {
-  email:string
-  password: string
-  repassword: string
-  name: string
-}
+import { Req } from "../interfaces";
 export const Register = () => {
   let flag: boolean = false;
   const [regInput, setRegInput] = useState<Req>({
@@ -18,7 +13,7 @@ export const Register = () => {
   const { email, password, repassword, name } = regInput;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   if (!email || !password || !repassword || !name) flag = true;
-  const login = async () => {
+  const register = async () => {
     try {
       if (password !== repassword) alert("password ba re-password zorloo! shalga")
       const {data} = await sendRequest(`register/`, "POST", regInput);
@@ -42,7 +37,7 @@ export const Register = () => {
           onChange={(e) => {setRegInput({ ...regInput, password: e.target.value})}}></input>
           <input value={repassword} className="rounded-md px-5 mt-4 bg-zinc-300 h-12" placeholder="Re-Password" type="password"
           onChange={(e) => {setRegInput({ ...regInput, repassword: e.target.value})}}></input>
-          <Btn func={login} txt={"Create account"} flag={flag} cls={"mt-10 rounded-full bg-zinc-300	disabled:bg-[gray] h-12"} />
+          <Btn func={register} txt={"Create account"} flag={flag} cls={"mt-10 rounded-full bg-zinc-300	disabled:bg-[gray] h-12"} />
           <p className="mt-10">By clicking Create account, you agree to Linktree's Terms and Conditions , confirm you have read our Privacy Notice. You may receive offers, news and updates from us.</p>
         </div>
       </div>

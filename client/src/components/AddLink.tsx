@@ -12,7 +12,7 @@ export const AddLink = () => {
             <p className="text-white text-center m-2">  Add link</p>
           </div>
         ) : (
-            <div className="mx-auto max-[650px]:w-[90%] bg-white w-[70%] rounded-lg h-[350px]">
+            <div className="mx-auto max-[650px]:w-[90%] bg-white w-[70%] rounded-lg h-[150px]">
               <div className="flex justify-between">
                 <p className="ml-5 mt-5">Enter URL</p>
                 <p className="mr-5 mt-5 cursor-pointer" onClick={() => { setTouch(!touch) }}>X</p>

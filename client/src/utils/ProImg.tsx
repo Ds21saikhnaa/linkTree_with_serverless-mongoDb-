@@ -6,6 +6,12 @@ type Props = {
 
 export const ProImg = ({ url, cls, alt }: Props) => {
   return (
-    <img className={cls} src={url} alt={alt}></img>
+    <>
+      {!url ? (
+        <div>loading</div>
+      ):(
+        <img className={cls} src={url} alt={alt}></img>
+      )}
+    </>
   )
 }
