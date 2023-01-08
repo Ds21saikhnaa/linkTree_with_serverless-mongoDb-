@@ -1,12 +1,12 @@
 import React from 'react';
-// import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Admin, Home, Login, NotFound, Profile, Register } from './pages';
 import { Navbar } from './utils';
-// import { Auth } from './context/Auth';
+import { AuthProvider } from './context/Auth';
 function App() {
   return (
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Navbar />
           <Routes>
               <Route path='' element={<Home />}/>
@@ -16,7 +16,8 @@ function App() {
               <Route path='/admin' element={<Admin />}/>
               <Route path='*' element={<NotFound />}/>
           </Routes>
-      </BrowserRouter>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

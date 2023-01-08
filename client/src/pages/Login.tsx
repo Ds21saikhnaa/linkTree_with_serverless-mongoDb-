@@ -1,8 +1,10 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Btn } from "../utils"
 import { Req } from "../interfaces";
 import { sendRequest } from "../utils/Api";
+import { Auth } from "../context/Auth";
 export const Login = () => {
+  const { setUser } = useContext(Auth);
   let flag: boolean = false;
   const [loginInput, setLoginInput] = useState<Req>({
     email: "",
@@ -15,8 +17,10 @@ export const Login = () => {
     try {
       const {data} = await sendRequest(`login/`, "POST", loginInput);
       localStorage.setItem('qwert', JSON.stringify(data));
-    } catch (e: any) {
-      alert(e.message.toString())
+      setUser(JSON.stringify(data));
+    } catch (error: any) {
+      const a = error.response.data
+      alert(a.error.message)
     }
   }
   return (

@@ -24,10 +24,8 @@ export const newLink = async (event) => {
 
 export const getUserLink = async (event) => {
   const name = event.pathParameters.name;
-  console.log(name);
   const links = await Links.find({ userName: name });
   if (!links.length) {
-    console.log("da");
     throw new MyError("iim user medeelel bhgui!", 404);
   }
   const id = links[0]!.userId;

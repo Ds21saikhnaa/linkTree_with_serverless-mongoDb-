@@ -1,8 +1,10 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Btn } from "../utils"
 import { sendRequest } from "../utils/Api";
 import { Req } from "../interfaces";
+import { Auth } from "../context/Auth";
 export const Register = () => {
+  const { setUser } = useContext(Auth);
   let flag: boolean = false;
   const [regInput, setRegInput] = useState<Req>({
     email: "",
@@ -18,8 +20,10 @@ export const Register = () => {
       if (password !== repassword) alert("password ba re-password zorloo! shalga")
       const {data} = await sendRequest(`register/`, "POST", regInput);
       localStorage.setItem('qwert', JSON.stringify(data));
-    } catch (e: any) {
-      alert(e.message.toString())
+      setUser(JSON.stringify(data));
+    } catch (error: any) {
+      const a = error.response.data
+      alert(a.error.message)
     }
   }
   return (

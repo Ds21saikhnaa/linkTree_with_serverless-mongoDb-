@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import { styles } from "../utils"
 
 export const PageOne = () => {
@@ -8,7 +9,11 @@ export const PageOne = () => {
           <h2 style={styles.txColor1} className="font-extrabold align-baseline mt-56 max-[860px]:text-7xl max-[560px]:text-5xl max-[360px]:text-3xl text-6xl">Share your Linktree anywhere you like!</h2>
           <p style={styles.txColor1} className="mt-4 text-2xl font-normal max-[860px]:text-xl max-[560px]:text-lg max-[360px]:text-base">Add your unique Linktree URL to all the platforms and places you find your audience. Then use your QR code to drive your offline traffic online.</p>
           <div className="flex flex-row max-[1000px]:justify-center">
-            <button className="font-bold max-[860px]:w-5/12 w-4/12 bg-purple-300 h-16 rounded-full mt-10 max-[380px]:text-sm">Get started for free</button>
+            <button className="hover:scale-105 font-bold max-[860px]:w-5/12 w-4/12 bg-purple-300 h-16 rounded-full mt-10 max-[380px]:text-sm">
+              <NavLink to="/register">
+                Get started for free
+              </NavLink>
+            </button>
           </div>
         </div>
         </div>
