@@ -26,7 +26,7 @@ export const Navbar = () => {
   }
   const copy = () => {
     const val = json.data.name
-    navigator.clipboard.writeText(`http://localhost:3000/profile/${val}`)
+    navigator.clipboard.writeText(`https://link-tree-with-serverless-mongo-db.vercel.app/profile/${val}`)
   }
   return (
     <div className="w-full fixed z-20 h-28">
